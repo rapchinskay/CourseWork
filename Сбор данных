@@ -1,0 +1,19 @@
+‘импорт необходимых библиотек
+import os
+import time
+import pandas as pd
+
+def save_files_into_excel(directory):
+    data = []
+    for foldername, subfolders, filenames in os.walk(directory):
+        for filename in filenames:
+            file_path = os.path.join(foldername, filename)
+            file_size = os.path.getsize(file_path)
+            file_time = os.path.getctime(file_path)
+            file_extension = os.path.splitext(filename)[1]
+            data.append([filename, foldername, file_size, time.ctime(file_time), file_extension])
+
+    df = pd.DataFrame(data, columns=['Имя файла', 'Папка', 'Размер', 'Время создания', 'Расширение'])
+    df.to_excel('C:\\Users\Valerya\Desktop\datad.xlsx', index=False)
+
+save_files_into_excel('D:\\учеба')
